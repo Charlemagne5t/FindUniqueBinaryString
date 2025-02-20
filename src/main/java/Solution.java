@@ -1,25 +1,28 @@
 import java.util.HashSet;
 import java.util.Set;
 
-public class Solution {
+class Solution {
     public String findDifferentBinaryString(String[] nums) {
-        int n = nums.length;
-        Set<Integer> intNumbers = new HashSet<>();
-        for (String num: nums) {
-            intNumbers.add(Integer.parseInt(num, 2));
+        Set<String> set = new HashSet<>();
+
+        for(String x : nums) {
+            set.add(x);
         }
-        int  i = 0;
-        while (i < 65537){
-            if(!intNumbers.contains(i)){
-                String result =  Integer.toBinaryString(i);
-                StringBuilder stringBuilder = new StringBuilder(result);
-                while (stringBuilder.length() != n){
-                    stringBuilder.insert(0, 0);
-                }
-                return stringBuilder.toString();
+        String res = "";
+
+        int n = nums[0].length();
+        for(long i = 0; i < (long) Math.pow(2, 17); i++) {
+            String str = Long.toBinaryString(i);
+            while(str.length() != n) {
+                str = "0" + str;
             }
-            i++;
+            if(!set.contains(str)) {
+                res = str;
+                break;
+            }
         }
-        return null;
+
+
+        return res;
     }
 }
